@@ -1,3 +1,17 @@
 class Actor < ActiveRecord::Base
-  
+    has_many :characters
+    has_many :shows, through: :characters
+
+    def full_name
+       "#{self.first_name} #{self.last_name}"
+    end
+
+    def list_roles
+        # ['Tyrion Lannister - Game of Thrones']
+        self.characters.all.map do |character|
+            "#{character.name} - #{character.show.name}"
+        # Actor.first.characters[0].name
+        # Actor.first.characters[0].show.name
+        end
+    end
 end
